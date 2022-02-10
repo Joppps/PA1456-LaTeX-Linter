@@ -2,8 +2,13 @@ package main
 
 import (
 	"fmt"
-	"os"
+	"strconv"
+	"time"
 )
+
+func test(name string) {
+	fmt.Println("my name is: ", name)
+}
 
 func isError(err error) bool {
 	if err != nil {
@@ -13,10 +18,19 @@ func isError(err error) bool {
 }
 
 func main() {
-	fmt.Println("Opening file!")
-	var file, err = os.OpenFile(".txtestt", os.O_RDWR, 0644)
-	if isError(err) {
-		return
+	// data, err := os.ReadFile(os.Args[1])
+	// if isError(err) {
+	// 	return
+	// }
+	// var test string = string(data)
+	// lines := strings.Split(test, "\n") //blir array av typ string []string    <---- go
+	// for i := 0; i < len(lines); i++ {
+	// 	fmt.Println(lines[i])
+	// }
+	// fmt.Printf("type: %T\n", lines)
+
+	for i := 0; i < 10; i++ {
+		go test(strconv.Itoa(i))
 	}
-	defer file.Close()
+	time.Sleep(1 * time.Second)
 }
