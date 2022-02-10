@@ -1,0 +1,37 @@
+@startuml
+!theme black-knight
+class main {
+Main file and main function
+--
+
+**Functions**
+IsError() -> bool
+--
+**Imports**
+"fmt"
+"os"
+"strings"
+}
+
+class Indentation{
+Function to be called for from main
+--
+**Functions**
++EnviromentIndentation([]string) -> []string
+--
+**Imports**
+"fmt"
+"strings"
+}
+
+note top of main : Main file that calls all functions.
+
+object TexFile
+object LintedFile
+
+main <|-- Indentation
+Indentation <|-- main
+TexFile --|> main
+main --|> LintedFile
+
+@enduml
