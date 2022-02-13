@@ -1,0 +1,166 @@
+\documentclass[12pt]{amsart}
+
+\addtolength{\hoffset}{-2.25cm}
+\addtolength{\textwidth}{4.5cm}
+\addtolength{\voffset}{-2.5cm}
+\addtolength{\textheight}{5cm}
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{15pt}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[colorlinks = true, linkcolor = black, citecolor = black, final]{hyperref}
+
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{ marvosym }
+\usepackage{wasysym}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+
+\newcommand{\ds}{\displaystyle}
+\DeclareMathOperator{\sech}{sech}
+
+
+\setlength{\parindent}{0in}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+{\scshape Math 2400} \hfill {\scshape \large Project \#4 - Recursive Sequences} \hfill {\scshape Spring 2016}
+ 
+\smallskip
+
+\hrule
+
+\bigskip
+
+This project may be completed individually or in a group of two or three students.  If you wish to complete the project as a group, let me know so that I can make the appropriate Blackboard tools available.  You will submit the written report to Project \#4 Assignment by uploading a pdf file.  Please follow all the specifications for a written report project that are outlined in the Specifications document.
+
+\bigskip
+
+\bigskip
+
+First, we need some information on recursive sequences.  Like, what are they?  A {\bf recursive sequence} is one where rather than giving the formula for the $n^\text{th}$ term as an expression of $n$ (like the Harmonic sequences $a_n = \frac{1}{n}$), the formula is given as an expression of previous terms in the sequence.  For example, we could find a term in the sequence by adding two to the previous term and then taking the square root of the result.  Since this is not directly related to the number of the term, we must also give a starting place when defining a recursive sequence.  Suppose our first term in this sequence we're defining is 1, then we would define the sequence as $$s_1 = 1\text{, and }s_n = \sqrt{s_{n-1} + 2}.$$  We can write out the first few terms \dots $$1, \sqrt{3}, \sqrt{2 + \sqrt{3}}, \sqrt{2 + \sqrt{2 + \sqrt{3}}}, \sqrt{2 + \sqrt{2 + \sqrt{2 + \sqrt{3}}}}\dots$$  It is difficult to see what might be happening to this sequence in this form, so we look at a decimal approximation of the terms: $$1, 1.73205, 1.93185, 1.98289, 1.99571, \dots$$
+This particular sequence seems to be approaching 2, but all of our tools for showing this depend on writing the terms as an expression of $n$.  What can we do?!?!?! Fear not.  We press on.\\
+
+It appears this sequence is increasing and always less than or equal to 2, and to verify this, we use a technique called, {\it mathematical induction}.  If you've learned this technique somewhere else, hooray! If not, don't worry, we'll focus on how this is used in recursive sequences and not concern ourselves with the formalness happening in the background. \\
+
+First we'll try to see if the sequence is increasing.  Starting with $n=1$, $1 = a_1 < a_2 = \sqrt{3} \approx 1.73205$, so initially, the sequence is increasing.  Suppose that this is the case, that the sequence is increasing up to the point where $n=k$.  Could we show that the sequence increases in the next step?  Could we show that $a_k < a_{k+1}$?  Yes,
+\begin{align*}
+a_{k+1} & = \sqrt{2 + a_k} \text{, by the recursive definition of our sequence,}\\
+& > \sqrt{2 + a_{k-1}} \text{, since we know $\{a_n\}$ is increasing up until $n=k$}\\
+& = a_k.
+\end{align*}
+Putting all this together shows that $a_k < a_{k+1}$.  If the sequence is increasing up to a point, then in the next step the sequence is also increasing.  The combination of the initial condition and what we just showed, tells us that the sequence is increasing.  This is mathematical induction!  If that didn't quite click, try thinking about it like this: We already know the sequence increases from the first to second term, so it is increasing up to the point where $n = 2$.  The induction step (where we showed that $a_k < a_{k+1}$ shows that it must be increasing in the next step, so $a_2 < a_3$.  Now, we know it is increasing all the way until $n = 3$.  The induction step again says that it must increase to the next term, so $a_3 < a_4$.  This process never needs to end.  If I want to know if the sequence is increasing at the 75$^\text{th}$ step, I can keep this argument going 71 more times.\\
+
+
+We can make a similar argument for the fact that the sequence is less than or equal to 2.  Clearly the first term, 1, is smaller than 2.  Now, we assume that every term up to $a_k$ is less than or equal to 2, and we try to show that this implies that the next term, $a_{k+1}$, is less than or equal to 2.
+\begin{align*}
+a_{k+1} & = \sqrt{2 + a_k} \text{, by the definition of the sequence,}\\
+& < \sqrt{2 + 2} \text{, since each term before $a_{k+1}$ is smaller than 2,}\\
+& = \sqrt{4} = 2.
+\end{align*}
+
+Hooray! The sequence is bounded above by 2.  These two facts together (increasing and bounded above) tell us that our recursive sequence does in fact converge.  What Theorem is that?  But, it doesn't tell us what the sequence converges to.  So, here we go.  Since we already know the limit exists, we can give it a name.  How about $L$?
+\begin{align*}
+\lim_{n \rightarrow \infty} a_n & = L\\
+\lim_{n \rightarrow \infty} \sqrt{2 + a_{n-1}} & = L \text{, by the definition of the sequence,}\\
+\sqrt{\lim_{n \rightarrow \infty} 2 + a_n} & = L \text{, since the square root function is continuous,}\\
+\sqrt{2 + \lim_{n \rightarrow \infty} a_n} & = L \text{, by Limit Laws,}\\
+\sqrt{2 + L} & = L \text{, since we called the limit of our sequence $L$,}\\
+2 + L & = L^2 \\
+0 & = L^2 - L - 2\\
+0 & = (L-2)(L+1)\\
+L & = 2 \text{, since $L \neq -1$ as all the terms of the sequence are positive.}
+\end{align*}
+
+AHA!!! The limit of the sequence is in fact 2.
+
+\vfill
+
+\vfill
+
+{\bf Now it's your turn!}
+
+\bigskip
+
+Consider the recursive sequence define by $$s_1 = 1 \text{ and } s_{n+1} = \frac{1}{3-s_n}.$$
+
+\bigskip
+
+Write out the first ten terms of the sequence.
+
+\bigskip
+
+From these terms, does it appear that the sequence is bounded? Monotone? Convergent?
+
+\bigskip
+
+Use induction to prove that $\{s_n\}$ is bounded and decreasing.
+
+\bigskip
+
+Prove that $\{s_n\}$ converges and find its limit.
+
+\vfill
+
+\newpage
+
+{\bf Recursive Bunnies }
+
+\medskip
+
+Consider what you know about bunny rabbits (or what we're pretending is true about bunny rabbits):
+
+\begin{itemize}
+
+\item  Bunny rabbits live forever.
+
+\item  There are always an equal number of female bunny rabbits and male bunny rabbits.
+
+\item  Bunny rabbits reproduce like crazy:  Every month, each ``productive pair" of rabbits produces another pair of baby bunnies.
+
+\item  It takes each new pair of bunnies two months to become productive.
+
+\item  The fact that so many of these bunnies are inbred does not affect the bunnies ability to continue living their lives as described above.
+
+\end{itemize}
+
+\bigskip
+
+\bigskip
+
+Suppose we start with a brand new pair of bunny rabbits for month 1.  How many pairs of bunnies are there in month 2?  Month 3?  Write out the number of pairs of bunnies we have in each of the first ten months.
+
+\bigskip
+
+Do you see pattern?  Does this look familiar?  Is it recursive? 
+
+\bigskip
+
+Let's denote the number of bunnies in the $n^{\text{th}}$ month by $b_n$.  Write down a formula for this sequence.
+
+\bigskip
+
+What can you say about the sequence $\{b_n\}$?  Is it monotonic?  Is it bounded?  Does it converge?  Prove these results.
+
+\bigskip
+
+Since the sequence $\{b_n\}$ diverges, we define a new sequence that is a bit more interesting to work with.  Let $a_n = \displaystyle{\frac{b_{n+1}}{b_n}}$.  
+
+\bigskip
+
+Is this sequence monotonic?  Is it bounded?
+
+\bigskip
+
+The sequences $\{a_n\}$ converges (promise!) even though it does not fit {\bf all} the criteria for the Bounded Monotone Convergence Theorem.  Find the limit of the sequence.
+
+\bigskip
+
+\end{document}
