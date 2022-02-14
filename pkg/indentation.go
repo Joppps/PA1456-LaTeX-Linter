@@ -2,6 +2,8 @@ package Lint
 
 import "strings"
 
+//CapitalLetter on first character for function gets included to other packages I.E Public usage.
+
 //Inserts tabs depending on all lines in the strings depending on the number of nested enviroments
 func EnviromentIndentation(fileLines []string, nrOfLines int) {
 	var enviroments uint8 = 0
