@@ -2,15 +2,11 @@ package Lint
 
 import "strings"
 
-func NewLiner(line string, nrOfIndents int, spaces bool) string {
+func NewLiner(line string, nrOfIndents int, preString string) string {
 	var newLine string = line
 	var newSubString string = ".\n"
 	for i := 0; i < nrOfIndents; i++ {
-		if spaces {
-			newSubString += "    "
-		} else {
-			newSubString += "\t"
-		}
+		newSubString += preString
 	}
 	if strings.Count(line, ". ") > 1 {
 		newLine = strings.Replace(line, ". ", newSubString, -1)

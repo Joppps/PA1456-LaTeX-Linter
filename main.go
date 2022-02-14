@@ -17,7 +17,16 @@ func isError(err error) bool {
 }
 
 type Settings struct {
+	NewLineFullStop bool
+	IndentTabs      bool
+	IndentSpaces    int
+	Indentation     bool
+	FormatComments  bool
+	CommentTabs     bool
+	CommentSpaces   int
 }
+
+var Bajskorv int
 
 func main() {
 	//Read settings file ---------------------------------------------
@@ -26,6 +35,7 @@ func main() {
 		fmt.Println("Settings.json not found!")
 		//return???
 	}
+	defer jsonFile.Close()
 	var settings Settings
 	byteVal, _ := ioutil.ReadAll(jsonFile)
 	json.Unmarshal(byteVal, &settings)
@@ -39,13 +49,27 @@ func main() {
 	lines := strings.Split(string(data), "\n") //blir array av typ string []string
 
 	//Call Lint functions bellow-------------------------------------------------------------
+	if settings.Indentation { //EnviromentIndentation kallar också (beroende på bool) på newLiner så den får korrekt indentation lite överallt.
+		Lint.EnviromentIndentation(lines, len(lines), settings.IndentTabs, settings.IndentSpaces, settings.NewLineFullStop)
+	} else if settings.NewLineFullStop {
+		for i := 0; i < len(lines); i++ {
+			lines[i] = Lint.NewLiner(lines[i], 0, "")
+		}
+	}
 
-	Lint.EnviromentIndentation(lines, len(lines)) //indenterar och lägger newlines.
-
-	//Svave or print output --------------------------------------------------------
+	//Save or print output --------------------------------------------------------
 
 	for i := 0; i < len(lines); i++ {
 		fmt.Println(lines[i])
 	}
 
+	//Print to check JSON
+	//fmt.Println("NewLineFullStop:", settings.NewLineFullStop)
+	//fmt.Println("IndentSettings:", "\n\tTabs:", settings.IndentTabs)
+	//fmt.Println("\tSpaces:", settings.IndentSpaces)
+	//fmt.Println("\tIndentation:", settings.Indentation)
+	//fmt.Println("CommentSettings:")
+	//fmt.Println("\tFormatComments:", settings.FormatComments)
+	//fmt.Println("\tCommentTabs:", settings.CommentTabs)
+	//fmt.Println("\tCommentSpaces:", settings.CommentSpaces)
 }

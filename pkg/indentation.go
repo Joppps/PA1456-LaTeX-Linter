@@ -5,16 +5,23 @@ import "strings"
 //CapitalLetter on first character for function gets included to other packages I.E Public usage.
 
 //Inserts tabs depending on all lines in the strings depending on the number of nested enviroments
-func EnviromentIndentation(fileLines []string, nrOfLines int) {
-	var enviroments uint8 = 0
+func EnviromentIndentation(fileLines []string, nrOfLines int, tabs bool, nrOfSpaces int, fullStopNewLine bool) {
+	var enviroments int = 0
+	var preString string = "\t"
+	if !tabs { //tabs = false => spaces = true
+		preString = ""
+		for i := 0; i < nrOfSpaces; i++ {
+			preString += " "
+		}
+	}
+
 	for i := 0; i < nrOfLines; i++ {
 		if ender(fileLines[i]) {
 			enviroments--
 		}
-
 		var newLine string
-		for i := 0; i < int(enviroments); i++ {
-			newLine += "\t"
+		for i := 0; i < enviroments; i++ {
+			newLine += preString
 		}
 		newLine += fileLines[i]
 		fileLines[i] = newLine
@@ -22,8 +29,9 @@ func EnviromentIndentation(fileLines []string, nrOfLines int) {
 		if starter(fileLines[i]) {
 			enviroments++
 		}
-		lintedLine := NewLiner(newLine, int(enviroments), false)
-		fileLines[i] = lintedLine
+		if fullStopNewLine {
+			fileLines[i] = NewLiner(newLine, enviroments, preString)
+		}
 	}
 }
 

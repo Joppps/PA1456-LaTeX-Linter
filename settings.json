@@ -1,0 +1,9 @@
+{
+	"NewLineFullStop": true,
+	"IndentTabs": true,
+	"IndentSpaces": 2,
+	"Indentation": true,
+	"FormatComments": true,
+	"CommentTabs": false,
+	"CommentSpaces": 2
+}
