@@ -26,7 +26,6 @@ type Settings struct {
 	CommentSpaces   int
 }
 
-var Bajskorv int
 
 func main() {
 	//Read settings file ---------------------------------------------
