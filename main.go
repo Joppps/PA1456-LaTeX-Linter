@@ -1,7 +1,7 @@
 package main
 
 import (
-	indentation "LatexLinter/pkg"
+	Lint "LatexLinter/pkg"
 	"fmt"
 	"os"
 	"strings"
@@ -20,9 +20,11 @@ func main() {
 		fmt.Println("Aborting!")
 		return
 	}
-	lines := strings.Split(string(data), "\n") //blir array av typ string []string    <---- go
-	indentation.EnviromentIndentation(lines, len(lines))
+	lines := strings.Split(string(data), "\n") //blir array av typ string []string
+	Lint.EnviromentIndentation(lines, len(lines))
+
 	for i := 0; i < len(lines); i++ {
 		fmt.Println(lines[i])
 	}
+
 }

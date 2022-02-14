@@ -1,4 +1,4 @@
-package indentation
+package Lint
 
 import "strings"
 
@@ -20,9 +20,12 @@ func EnviromentIndentation(fileLines []string, nrOfLines int) {
 		if starter(fileLines[i]) {
 			enviroments++
 		}
+		lintedLine := NewLiner(newLine, int(enviroments), false)
+		fileLines[i] = lintedLine
 	}
 }
 
+//helper functions
 func starter(line string) bool {
 	var contains bool = false
 	begin, end := "\\begin{", "\\end{"
