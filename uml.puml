@@ -1,15 +1,15 @@
 @startuml
-!theme black-knight
-class main {
-Main file and main function
---
+!theme blueprint
 
+package Lint {
+
+class FullStopNewline{
+Adds newline characters to fullstops.
+--
 **Functions**
-IsError() -> bool
++NewLiner() -> string
 --
 **Imports**
-"fmt"
-"os"
 "strings"
 }
 
@@ -23,15 +23,44 @@ Function to be called for from main
 "fmt"
 "strings"
 }
+}
+
+
+map settings {
+	NewLineFullStop => bool
+	IndentTabs => bool
+	IndentSpaces => int
+	Indentation => bool
+	FormatComments => bool
+	CommentTabs => bool
+	CommentSpaces => int
+}
+
+
+class main {
+Main file and main function
+--
+**Functions**
+IsError() -> bool
+--
+**Imports**
+Lint "LatexLinter/pkg"
+"encoding/json"
+"fmt"
+"io/ioutil"
+"os"
+"strings"
+}
+
+
 
 note top of main : Main file that calls all functions.
 
 object TexFile
 object LintedFile
-
-main <|-- Indentation
-Indentation <|-- main
-TexFile --|> main
-main --|> LintedFile
-
+settings "JSON_FILE"--"Struct" main
+main <|.. Indentation
+TexFile --|> main : new texFile goes through main
+main --|> LintedFile : Linted file saves on CWD
+main <|.. FullStopNewline
 @enduml
