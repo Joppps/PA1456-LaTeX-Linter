@@ -44,3 +44,10 @@ GOOS=windows GOARCH=amd64 go build -o main.exe main.go
 ---
 
 ## Run instructions
+
+## Todo
+
+- Write detailed run instructions
+- More information given to user at run time
+- Checks on all linter rules whether they already have been done.
+- Checks on file endings
