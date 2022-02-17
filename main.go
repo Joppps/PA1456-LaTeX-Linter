@@ -1,6 +1,7 @@
 package main
 
 import (
+	File "LatexLinter/fileWrite"
 	Lint "LatexLinter/pkg"
 	"encoding/json"
 	"fmt"
@@ -23,16 +24,15 @@ type Settings struct {
 	Indentation     bool
 	FormatComments  bool
 	CommentTabs     bool
-	CommentSpaces   int
+	CommentSpacers  int
 }
-
 
 func main() {
 	//Read settings file ---------------------------------------------
 	jsonFile, err := os.Open("settings.json")
 	if isError(err) {
 		fmt.Println("Settings.json not found!")
-		//return???
+		return
 	}
 	defer jsonFile.Close()
 	var settings Settings
@@ -55,14 +55,23 @@ func main() {
 			lines[i] = Lint.NewLiner(lines[i], 0, "")
 		}
 	}
+	if settings.FormatComments {
+		for i := 0; i < len(lines); i++ {
+			lines[i] = Lint.CommentFormat(lines[i], settings.CommentTabs, settings.CommentSpacers)
+		}
+	}
 
 	//Save or print output --------------------------------------------------------
 
-	for i := 0; i < len(lines); i++ {
-		fmt.Println(lines[i])
-	}
+	File.CreateAndWriteNewFile(os.Args[1], lines, "Linted")
 
-	//Print to check JSON
+	// fmt.Printf("%s exists: %t\n", os.Args[1], File.FileExist(os.Args[1]))
+
+	// for i := 0; i < len(lines); i++ { //print Lines
+	// 	fmt.Printf("%s\n", lines[i])
+	// }
+
+	//Print to check JSON-------
 	//fmt.Println("NewLineFullStop:", settings.NewLineFullStop)
 	//fmt.Println("IndentSettings:", "\n\tTabs:", settings.IndentTabs)
 	//fmt.Println("\tSpaces:", settings.IndentSpaces)
