@@ -18,13 +18,40 @@ Function to be called for from main
 --
 **Functions**
 +EnviromentIndentation([]string) -> []string
+-starter() -> bool
+-ender() -> bool
 --
 **Imports**
 "fmt"
 "strings"
 }
+
+class commentFormater {
+ Adds specific spacers to comments
+--
+**Imports**
+"strings"
+**Functions**
++CommentFormat() -> string
 }
 
+}
+
+
+class WriteToNewFile {
+Writes file-lines to file copy.
+--
+**Functions**
++CreateAndWriteNewFile(...) -> bool
+-fileExist(filepath) -> bool
+**Imports**
+"errors"
+"fmt"
+"log"
+"os"
+"strconv"
+"strings"
+}
 
 map settings {
 	NewLineFullStop => bool
@@ -60,6 +87,8 @@ object TexFile
 object LintedFile
 settings "JSON_FILE"--"Struct" main
 main <|.. Indentation
+main <|.. commentFormater
+main <|.. WriteToNewFile
 TexFile --|> main : new texFile goes through main
 main --|> LintedFile : Linted file saves on CWD
 main <|.. FullStopNewline
