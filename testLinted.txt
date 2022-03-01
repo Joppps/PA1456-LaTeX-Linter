@@ -1,0 +1,21 @@
+\begin{document}
+This is a textFile! 
+This is also a file for tests! 
+This.
+Is.
+Very.
+Cool!
+\begin{align}
+	E=MC^2
+	\begin{test}
+		Sir Isaac Newton
+		Einstein
+		....Hawking.
+		Är..
+		Bäst.
+		Av alla!!.% COMMENT. Comment!
+	\end{test}
+\end{align}
+
+\end{document}
+

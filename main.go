@@ -36,7 +36,10 @@ func main() {
 	}
 	defer jsonFile.Close()
 	var settings Settings
-	byteVal, _ := ioutil.ReadAll(jsonFile)
+	byteVal, err := ioutil.ReadAll(jsonFile)
+	if isError(err) {
+		return
+	}
 	json.Unmarshal(byteVal, &settings)
 
 	//read TexFile -----------------------------------------------

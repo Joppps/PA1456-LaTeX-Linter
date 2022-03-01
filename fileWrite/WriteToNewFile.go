@@ -13,7 +13,7 @@ import (
 func CreateAndWriteNewFile(filepath string, lines []string, fileNameExtender string) bool {
 	var success bool = true
 
-	temp := strings.Split(filepath, "/")
+	temp := strings.Split(filepath, string(os.PathSeparator))
 	fileTotalName := temp[len(temp)-1]
 	fileParts := strings.Split(fileTotalName, ".") //please dont have dots in your fileNames....
 
