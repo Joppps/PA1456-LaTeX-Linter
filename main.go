@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"strings"
 )
@@ -17,6 +18,44 @@ func isError(err error) bool {
 	return (err != nil)
 }
 
+func createSettings() {
+	content := `{
+	"NewLineFullStop": true,
+	"IndentTabs": true,
+	"IndentSpaces": 2,
+	"Indentation": true,
+	"FormatComments": true,
+	"CommentTabs": false,
+	"CommentSpacers": 4,
+	"SectionBlanks": true,
+	"SectionCount": 2
+}
+	`
+	if err := os.WriteFile("settings.json", []byte(content), 0666); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func getSettings() (Settings, error) {
+	jsonFile, err := os.Open("settings.json")
+	var settings Settings
+	if isError(err) {
+		fmt.Println("Settings.json not found! Creating new file :)")
+		createSettings()
+		jsonFile, err = os.Open("settings.json")
+		if isError(err) {
+			return settings, err
+		}
+	}
+	defer jsonFile.Close()
+	byteVal, err := ioutil.ReadAll(jsonFile)
+	if isError(err) {
+		return settings, err
+	}
+	json.Unmarshal(byteVal, &settings)
+	return settings, err
+}
+
 type Settings struct {
 	NewLineFullStop bool
 	IndentTabs      bool
@@ -25,23 +64,17 @@ type Settings struct {
 	FormatComments  bool
 	CommentTabs     bool
 	CommentSpacers  int
+	SectionBlanks   bool
+	SectionCount    int
 }
 
 func main() {
 	//Read settings file ---------------------------------------------
-	jsonFile, err := os.Open("settings.json")
+	settings, err := getSettings()
 	if isError(err) {
-		fmt.Println("Settings.json not found!")
+		fmt.Println("Aborting!")
 		return
 	}
-	defer jsonFile.Close()
-	var settings Settings
-	byteVal, err := ioutil.ReadAll(jsonFile)
-	if isError(err) {
-		return
-	}
-	json.Unmarshal(byteVal, &settings)
-
 	//read TexFile -----------------------------------------------
 	data, err := os.ReadFile(os.Args[1])
 	if isError(err) {
@@ -51,6 +84,7 @@ func main() {
 	lines := strings.Split(string(data), "\n") //blir array av typ string []string
 
 	//Call Lint functions bellow-------------------------------------------------------------
+
 	if settings.Indentation { //EnviromentIndentation kallar också (beroende på bool) på newLiner så den får korrekt indentation lite överallt.
 		Lint.EnviromentIndentation(lines, len(lines), settings.IndentTabs, settings.IndentSpaces, settings.NewLineFullStop)
 	} else if settings.NewLineFullStop {
@@ -61,6 +95,11 @@ func main() {
 	if settings.FormatComments {
 		for i := 0; i < len(lines); i++ {
 			lines[i] = Lint.CommentFormat(lines[i], settings.CommentTabs, settings.CommentSpacers)
+		}
+	}
+	if settings.SectionBlanks {
+		for i := 0; i < len(lines); i++ {
+			lines[i] = Lint.InsertBlankLinesOnSections(lines[i], settings.SectionCount)
 		}
 	}
 
@@ -75,6 +114,7 @@ func main() {
 	// }
 
 	//Print to check JSON-------
+
 	//fmt.Println("NewLineFullStop:", settings.NewLineFullStop)
 	//fmt.Println("IndentSettings:", "\n\tTabs:", settings.IndentTabs)
 	//fmt.Println("\tSpaces:", settings.IndentSpaces)

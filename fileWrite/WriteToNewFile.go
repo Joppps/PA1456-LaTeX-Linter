@@ -43,10 +43,18 @@ func CreateAndWriteNewFile(filepath string, lines []string, fileNameExtender str
 		}
 		defer file.Close()
 		for _, line := range lines {
-			_, err := file.WriteString(line + "\n")
-			if err != nil {
-				log.Fatal(err)
+			if strings.Contains(line, "\r") { //windows line endings uses \r\n hopefully all lines are the same ....
+				_, err := file.WriteString(line + "\r\n")
+				if err != nil {
+					log.Fatal(err)
+				}
+			} else {
+				_, err := file.WriteString(line + "\n")
+				if err != nil {
+					log.Fatal(err)
+				}
 			}
+
 		}
 	}
 	fmt.Println("Successfully written to: ", fileNameTest)

@@ -5,5 +5,8 @@
 	"Indentation": true,
 	"FormatComments": true,
 	"CommentTabs": false,
-	"CommentSpacers": 4
+	"CommentSpacers": 4,
+	"SectionBlanks": true,
+	"SectionCount": 0
 }
+	
