@@ -17,7 +17,7 @@ func InsertBlankLinesOnSections(line string, lineCount int) string {
 			blanks += "\n"
 		}
 	}
-	re = regexp.MustCompile(`(?m)(\\section|\\subsection|\\subsubsection|\\chapter|\\paragraph|\\subparagraph)`)
+	re = regexp.MustCompile(`(?m)(^\s*(\\section|\\subsection|\\subsubsection|\\chapter|\\paragraph|\\subparagraph))`)
 	var newLine string = re.ReplaceAllString(line, blanks+"$1")
 	return newLine
 }

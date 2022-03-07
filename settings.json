@@ -9,7 +9,6 @@
 	"SectionBlanks": true,
 	"SectionCount": 2,
 	"ExcludedEnviroments":[
-		"document",
-		"align"
+		"document"
 	]
 }

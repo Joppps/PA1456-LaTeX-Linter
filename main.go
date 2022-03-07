@@ -109,7 +109,6 @@ func main() {
 	//Save or print output --------------------------------------------------------
 
 	File.CreateAndWriteNewFile(os.Args[1], lines, "Linted")
-	fmt.Println(settings.ExcludedEnviroments)
 	// fmt.Printf("%s exists: %t\n", os.Args[1], File.FileExist(os.Args[1]))
 
 	// for i := 0; i < len(lines); i++ { //print Lines
