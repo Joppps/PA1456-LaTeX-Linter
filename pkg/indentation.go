@@ -1,6 +1,9 @@
 package Lint
 
-import "strings"
+import (
+	"regexp"
+	"strings"
+)
 
 //CapitalLetter on first character for function gets included to other packages I.E Public usage.
 
@@ -16,6 +19,7 @@ func EnviromentIndentation(fileLines []string, nrOfLines int, tabs bool, nrOfSpa
 	}
 
 	for i := 0; i < nrOfLines; i++ {
+
 		if ender(fileLines[i]) {
 			enviroments--
 		}
@@ -23,7 +27,8 @@ func EnviromentIndentation(fileLines []string, nrOfLines int, tabs bool, nrOfSpa
 		for i := 0; i < enviroments; i++ {
 			newLine += preString
 		}
-		newLine += fileLines[i]
+		var removedWhiteSpaceLine = removeIndent(fileLines[i])
+		newLine += removedWhiteSpaceLine
 		fileLines[i] = newLine
 
 		if starter(fileLines[i]) {
@@ -33,6 +38,12 @@ func EnviromentIndentation(fileLines []string, nrOfLines int, tabs bool, nrOfSpa
 			fileLines[i] = NewLiner(newLine, enviroments, preString)
 		}
 	}
+}
+
+func removeIndent(line string) string {
+	re := regexp.MustCompile(`(?m)^\s*`) //match all whitespace from start, multiline = true.
+	line = re.ReplaceAllString(line, "") //removing all whitespace from start.
+	return line
 }
 
 //helper functions

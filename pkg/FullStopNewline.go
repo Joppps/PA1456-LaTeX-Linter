@@ -1,6 +1,7 @@
 package Lint
 
 import (
+	"regexp"
 	"strings"
 )
 
@@ -10,7 +11,14 @@ func NewLiner(line string, nrOfIndents int, preString string) string {
 
 	lines := strings.Split(line, "%")
 
-	var newSubString string = ".\n"
+	re := regexp.MustCompile(`\r`)
+	var windows bool = re.MatchString(line) //returns true if carriage return exists.
+	var newSubString string
+	if windows {
+		newSubString = ".\n"
+	} else {
+		newSubString = ".\r\n"
+	}
 	var newLine string = lines[0]
 
 	for i := 0; i < nrOfIndents; i++ { //adding the indentations
