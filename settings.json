@@ -7,6 +7,9 @@
 	"CommentTabs": false,
 	"CommentSpacers": 4,
 	"SectionBlanks": true,
-	"SectionCount": 0
+	"SectionCount": 2,
+	"ExcludedEnviroments":[
+		"document",
+		"align"
+	]
 }
-	

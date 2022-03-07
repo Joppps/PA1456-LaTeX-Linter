@@ -28,9 +28,11 @@ func createSettings() {
 	"CommentTabs": false,
 	"CommentSpacers": 4,
 	"SectionBlanks": true,
-	"SectionCount": 2
-}
-	`
+	"SectionCount": 2,
+	"ExcludedEnviroments":[
+		"document"
+	]
+}`
 	if err := os.WriteFile("settings.json", []byte(content), 0666); err != nil {
 		log.Fatal(err)
 	}
@@ -57,15 +59,16 @@ func getSettings() (Settings, error) {
 }
 
 type Settings struct {
-	NewLineFullStop bool
-	IndentTabs      bool
-	IndentSpaces    int
-	Indentation     bool
-	FormatComments  bool
-	CommentTabs     bool
-	CommentSpacers  int
-	SectionBlanks   bool
-	SectionCount    int
+	NewLineFullStop     bool
+	IndentTabs          bool
+	IndentSpaces        int
+	Indentation         bool
+	FormatComments      bool
+	CommentTabs         bool
+	CommentSpacers      int
+	SectionBlanks       bool
+	SectionCount        int
+	ExcludedEnviroments []string
 }
 
 func main() {
@@ -86,7 +89,7 @@ func main() {
 	//Call Lint functions bellow-------------------------------------------------------------
 
 	if settings.Indentation { //EnviromentIndentation kallar också (beroende på bool) på newLiner så den får korrekt indentation lite överallt.
-		Lint.EnviromentIndentation(lines, len(lines), settings.IndentTabs, settings.IndentSpaces, settings.NewLineFullStop)
+		Lint.EnviromentIndentation(lines, len(lines), settings.IndentTabs, settings.IndentSpaces, settings.NewLineFullStop, settings.ExcludedEnviroments)
 	} else if settings.NewLineFullStop {
 		for i := 0; i < len(lines); i++ {
 			lines[i] = Lint.NewLiner(lines[i], 0, "")
@@ -106,7 +109,7 @@ func main() {
 	//Save or print output --------------------------------------------------------
 
 	File.CreateAndWriteNewFile(os.Args[1], lines, "Linted")
-
+	fmt.Println(settings.ExcludedEnviroments)
 	// fmt.Printf("%s exists: %t\n", os.Args[1], File.FileExist(os.Args[1]))
 
 	// for i := 0; i < len(lines); i++ { //print Lines

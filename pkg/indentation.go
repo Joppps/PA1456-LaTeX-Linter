@@ -8,7 +8,7 @@ import (
 //CapitalLetter on first character for function gets included to other packages I.E Public usage.
 
 //Inserts tabs depending on all lines in the strings depending on the number of nested enviroments
-func EnviromentIndentation(fileLines []string, nrOfLines int, tabs bool, nrOfSpaces int, fullStopNewLine bool) {
+func EnviromentIndentation(fileLines []string, nrOfLines int, tabs bool, nrOfSpaces int, fullStopNewLine bool, excludes []string) {
 	var enviroments int = 0
 	var preString string = "\t"
 	if !tabs { //tabs = false => spaces = true
@@ -20,7 +20,7 @@ func EnviromentIndentation(fileLines []string, nrOfLines int, tabs bool, nrOfSpa
 
 	for i := 0; i < nrOfLines; i++ {
 
-		if ender(fileLines[i]) {
+		if ender(fileLines[i], excludes) {
 			enviroments--
 		}
 		var newLine string
@@ -31,7 +31,7 @@ func EnviromentIndentation(fileLines []string, nrOfLines int, tabs bool, nrOfSpa
 		newLine += removedWhiteSpaceLine
 		fileLines[i] = newLine
 
-		if starter(fileLines[i]) {
+		if starter(fileLines[i], excludes) {
 			enviroments++
 		}
 		if fullStopNewLine {
@@ -47,26 +47,32 @@ func removeIndent(line string) string {
 }
 
 //helper functions
-func starter(line string) bool {
+func starter(line string, excludes []string) bool {
 	var contains bool = false
 	begin, end := "\\begin{", "\\end{"
-	docBegin := "\\begin{document}"
-	if strings.Contains(line, docBegin) {
-		return contains
+
+	for i := 0; i < len(excludes); i++ {
+		if strings.Contains(line, "\\begin{"+excludes[i]+"}") {
+			return contains
+		}
 	}
+
 	if strings.Contains(line, begin) && !strings.Contains(line, end) {
 		contains = true
 	}
 	return contains
 }
 
-func ender(line string) bool {
+func ender(line string, excludes []string) bool {
 	var contains bool = false
 	begin, end := "\\begin{", "\\end{"
-	docEnd := "\\end{document}"
-	if strings.Contains(line, docEnd) {
-		return contains
+
+	for i := 0; i < len(excludes); i++ {
+		if strings.Contains(line, "\\end{"+excludes[i]+"}") {
+			return contains
+		}
 	}
+
 	if strings.Contains(line, end) && !strings.Contains(line, begin) {
 		contains = true
 	}
