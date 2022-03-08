@@ -109,20 +109,5 @@ func main() {
 	//Save or print output --------------------------------------------------------
 
 	File.CreateAndWriteNewFile(os.Args[1], lines, "Linted")
-	// fmt.Printf("%s exists: %t\n", os.Args[1], File.FileExist(os.Args[1]))
 
-	// for i := 0; i < len(lines); i++ { //print Lines
-	// 	fmt.Printf("%s\n", lines[i])
-	// }
-
-	//Print to check JSON-------
-
-	//fmt.Println("NewLineFullStop:", settings.NewLineFullStop)
-	//fmt.Println("IndentSettings:", "\n\tTabs:", settings.IndentTabs)
-	//fmt.Println("\tSpaces:", settings.IndentSpaces)
-	//fmt.Println("\tIndentation:", settings.Indentation)
-	//fmt.Println("CommentSettings:")
-	//fmt.Println("\tFormatComments:", settings.FormatComments)
-	//fmt.Println("\tCommentTabs:", settings.CommentTabs)
-	//fmt.Println("\tCommentSpaces:", settings.CommentSpaces)
 }

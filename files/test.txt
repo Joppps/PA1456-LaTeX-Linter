@@ -1,6 +1,7 @@
 \begin{document}
 This is a textFile! 
-This is also a file for tests! 
+dankmems. Testing. %Comment
+This is also a file for tests. %Comment
 This. Is. Very. Cool!
 \section{Calculation}
 \begin{align}
@@ -8,7 +9,7 @@ E=MC^2
 \begin{test}
 Sir Isaac Newton
 Einstein
-....Hawking. Är.. Bäst. Av alla!!.% COMMENT. Comment!
+....Hawking. Är.. Bäst. Av alla!!.% COMMENT. Comment! %test %Comment2
 \end{test}%Comment
 \end{align} % Comment
 

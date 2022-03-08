@@ -3,7 +3,7 @@
 	"IndentTabs": true,
 	"IndentSpaces": 2,
 	"Indentation": true,
-	"FormatComments": true,
+	"FormatComments": false,
 	"CommentTabs": false,
 	"CommentSpacers": 4,
 	"SectionBlanks": true,
