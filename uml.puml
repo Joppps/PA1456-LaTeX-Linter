@@ -11,6 +11,7 @@ Adds newline characters to fullstops.
 --
 **Imports**
 "strings"
+"regexp"
 }
 
 class Indentation{
@@ -18,11 +19,12 @@ Function to be called for from main
 --
 **Functions**
 +EnviromentIndentation([]string) -> []string
+-removeIndent() -> string
 -starter() -> bool
 -ender() -> bool
 --
 **Imports**
-"fmt"
+"regexp"
 "strings"
 }
 
@@ -30,14 +32,23 @@ class commentFormater {
  Adds specific spacers to comments
 --
 **Imports**
-"strings"
+"regexp"
 **Functions**
 +CommentFormat() -> string
 }
 
+class blankLinesForSections {
+ Adds blank lines before sections and chapters etc..
+--
+**Imports**
+"regexp"
+**Functions**
++InsertBlankLinesOnSections() -> string
 }
 
+}
 
+package File {
 class WriteToNewFile {
 Writes file-lines to file copy.
 --
@@ -52,7 +63,7 @@ Writes file-lines to file copy.
 "strconv"
 "strings"
 }
-
+}
 map settings {
 	NewLineFullStop => bool
 	IndentTabs => bool
@@ -68,9 +79,13 @@ class main {
 Main file and main function
 --
 **Functions**
-IsError() -> bool
+-IsError() -> bool
+-createSettings() -> void
+-getSettings() -> (struct Settings, error)
+-checkFileExtension() -> bool
 --
 **Imports**
+File "LatexLinter/fileWrite"
 Lint "LatexLinter/pkg"
 "encoding/json"
 "fmt"
@@ -92,4 +107,5 @@ main <|.. WriteToNewFile
 TexFile --|> main : new texFile goes through main
 main --|> LintedFile : Linted file saves on CWD
 main <|.. FullStopNewline
+main <|.. blankLinesForSections
 @enduml

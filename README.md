@@ -6,7 +6,7 @@
 
 <img src="https://go.dev/blog/gopher/header.jpg" alt="go gopher" width="150" />
 
-
+If you just want to build the program for the native operating system simply stand in the main.go directory (this one) and run the bash command `go build`.
 <details>
 <summary> MacOS </summary>
 
@@ -45,9 +45,9 @@ GOOS=windows GOARCH=amd64 go build -o main.exe main.go
 
 ## Run instructions
 
-## Todo
+To run the program simply do `./LatexLinter [PATH TO TEX FILE]`
 
-- Write detailed run instructions
-- More information given to user at run time
-- Checks on all linter rules whether they already have been done.
-- Checks on file endings
+If you would like to change the settings of the program, simply edit the <i>settings.json</i> file.
+
+## Schema on project
+<img src="uml.png" alt="UML of project"  />

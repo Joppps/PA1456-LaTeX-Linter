@@ -4,10 +4,10 @@ import (
 	"regexp"
 )
 
-func CommentFormat(line string, tabsOrNot bool, nrOfSpaces int) string {
+func CommentFormat(line string, tabsOrNot bool, nrOfSpacers int) string {
 	var spacer string
 	var newLine string = line
-	for i := 0; i < nrOfSpaces; i++ {
+	for i := 0; i < nrOfSpacers; i++ {
 		if tabsOrNot {
 			spacer += "\t"
 		} else {
