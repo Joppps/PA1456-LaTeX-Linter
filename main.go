@@ -71,6 +71,16 @@ type Settings struct {
 	ExcludedEnviroments []string
 }
 
+//returns true if extension is tex,bib or tikz
+func checkFileExtension(fileName string) bool {
+	var ret bool = false
+	dots := strings.Split(fileName, ".")
+	if dots[len(dots)-1] == "tex" || dots[len(dots)-1] == "bib" || dots[len(dots)-1] == "tikz" {
+		ret = true
+	}
+	return ret
+}
+
 func main() {
 	//Read settings file ---------------------------------------------
 	settings, err := getSettings()
@@ -79,6 +89,10 @@ func main() {
 		return
 	}
 	//read TexFile -----------------------------------------------
+	if !checkFileExtension(os.Args[1]) {
+		fmt.Println("Wrong type of file! Must be tex, bib or tikz!")
+		return
+	}
 	data, err := os.ReadFile(os.Args[1])
 	if isError(err) {
 		fmt.Println("Aborting!")

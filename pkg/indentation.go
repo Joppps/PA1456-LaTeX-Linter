@@ -52,7 +52,7 @@ func starter(line string, excludes []string) bool {
 	begin, end := "\\begin{", "\\end{"
 
 	for i := 0; i < len(excludes); i++ {
-		if strings.Contains(line, "\\begin{"+excludes[i]+"}") {
+		if strings.Contains(line, "\\begin{"+excludes[i]) {
 			return contains
 		}
 	}
@@ -68,7 +68,7 @@ func ender(line string, excludes []string) bool {
 	begin, end := "\\begin{", "\\end{"
 
 	for i := 0; i < len(excludes); i++ {
-		if strings.Contains(line, "\\end{"+excludes[i]+"}") {
+		if strings.Contains(line, "\\end{"+excludes[i]) {
 			return contains
 		}
 	}
