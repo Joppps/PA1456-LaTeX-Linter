@@ -82,6 +82,10 @@ func checkFileExtension(fileName string) bool {
 }
 
 func main() {
+	if len(os.Args) < 2 {
+		fmt.Println("You need to add the latex file as a commandline argument when calling the program!!")
+		return
+	}
 	//Read settings file ---------------------------------------------
 	settings, err := getSettings()
 	if isError(err) {
