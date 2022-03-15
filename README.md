@@ -49,7 +49,7 @@ GOOS=windows GOARCH=amd64 go build -o main.exe main.go
 
 ## Run instructions
 
-To run the program simply do `./LatexLinter [PATH TO TEX FILE]`.
+To run the program simply do `./[PathToBinary] [PATH TO TEX FILE]`.
 
 In the Bin folder are some compiled programs, they name the operating system and the architecture they run on. 
 
