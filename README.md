@@ -1,4 +1,8 @@
-# PA1456-Individuellt
+# PA1456-LaTeX linter
+
+## About
+
+Hi, this is my first project in GO where the objective was to make some simple linter rules for LaTeX files. 
 
 ## Compile instructions
 
@@ -45,7 +49,10 @@ GOOS=windows GOARCH=amd64 go build -o main.exe main.go
 
 ## Run instructions
 
-To run the program simply do `./LatexLinter [PATH TO TEX FILE]`
+To run the program simply do `./LatexLinter [PATH TO TEX FILE]`.
+
+In the Bin folder are some compiled programs, they name the operating system and the architecture they run on. 
+
 
 If you would like to change the settings of the program, simply edit the <i>settings.json</i> file.
 
